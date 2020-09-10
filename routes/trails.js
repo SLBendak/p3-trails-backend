@@ -44,7 +44,7 @@ router.post('/createtrail', (req, res) => {
         db.User.findOne({ userTrails: {name: req.body.name} })
         // foundUser.userTrails.includes(req.body.name)
         .then(newTrail=>{
-            let favedTrail = {name: req.body.name}
+            let favedTrail = {name: req.body.name, id: req.body.id}
             if(!newTrail){
                 console.log("created newTrail")
                 console.log(favedTrail)
