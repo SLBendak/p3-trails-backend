@@ -41,7 +41,7 @@ router.post('/createtrail', (req, res) => {
     .then(user=>{
         console.log(user)
         let foundUser = user
-        db.User.findOne({ userTrails: {name: req.body.name} })
+        db.User.findOne({ userTrails: {name: req.body.name, id:req.body.id} })
         // foundUser.userTrails.includes(req.body.name)
         .then(newTrail=>{
             let favedTrail = {name: req.body.name, id: req.body.id}
@@ -63,32 +63,18 @@ router.post('/createtrail', (req, res) => {
     .catch(err => console.log("error3", err))
 
 })
+
 router.post('/delete', (req, res) => {
-    console.log(req.body)
-    db.User.findById({ _id: req.body._id })
-    .then(user=>{
-        console.log(user)
-        let foundUser = user
-        db.User.findOne({ userTrails: {name: req.body.userTrails} })
-        // foundUser.userTrails.includes(req.body.name)
-        .then(newTrail=>{
-            let favedTrail = {name: req.body.userTrails}
-            if(newTrail){
-                console.log("deleting Trail")
-                foundUser.userTrails.remove(favedTrail)
-                foundUser.save()
-                console.log('--------',favedTrail)
-                res.send(user)
-                
-            } else {
-                console.log("trail in userTrails")
-            }
+    console.log("These are initial values", req.body)
+    db.User.findByIdAndUpdate(
+        { _id: req.body._id }, {
+            $pull: {"userTrails": {name:req.body.userTrails}}
+        }, {safe: true, upsert: true}, 
+        function(err, user){
+            if (err) {return handleError(res, err);}
+            return res.status(200).json(err);
         })
-        .catch(err => console.log("error2", err))
+        })
 
-    })
-    .catch(err => console.log("error3", err))
-
-})
 
 module.exports = router;
