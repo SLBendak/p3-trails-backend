@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // mongo connection
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/schemaTest', {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/trailfinderDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false

@@ -37,6 +37,7 @@ const User = require('../models/User');
             /////////////////////////////////////
 
 router.post('/createtrail', (req, res) => {
+    // console.log("----------", req.body.user)
     db.User.findById({ _id: req.body.user.id })
     .then(user=>{
         console.log(user)
@@ -63,6 +64,8 @@ router.post('/createtrail', (req, res) => {
     .catch(err => console.log("error3", err))
 
 })
+
+
 router.post('/delete', (req, res) => {
     console.log(req.body)
     db.User.findById({ _id: req.body._id })
