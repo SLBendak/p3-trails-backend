@@ -28,7 +28,7 @@ router.post('/trails', (req, res) => {
 
 //delete the users trail/s
 router.delete('/:id', (req, res) => {
-    db.Trail.findByIdAndDelete(req.params.id).then((removed) => {
+    db.User.findByIdAndDelete({userTrails: req.body.name}).then((removed) => {
         res.status(200).json({ message: 'Successfully deleted trail' });
     });
 });
